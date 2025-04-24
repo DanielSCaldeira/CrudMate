@@ -1,0 +1,42 @@
+# Arquivos de bytecode Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+envs/
+
+# Arquivos de distribuição / empacotamento
+build/
+dist/
+sdist/
+*.egg-info/
+*.egg
+
+# Arquivos temporários e de log
+*.log
+*.tmp
+*.swp
+*.bak
+*.asv
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração local
+.env
+.env.local
+
+# Arquivos de desenvolvimento (podem variar dependendo das ferramentas)
+*.pydevproject
+*.pth
+.project
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Outros arquivos específicos do sistema operacional ou editores
+__MACOSX/
