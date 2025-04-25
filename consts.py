@@ -1,3 +1,80 @@
+from functions.back_end.gerar_api import gerar_api
+from functions.back_end.gerar_dto import gerar_dto
+from functions.back_end.gerar_model import gerar_model
+from functions.back_end.gerar_service import gerar_service
+from functions.back_end.gerar_xml_mapping import gerar_xml_mapping
+from functions.front_end.pagina.alterar import gerar_alterar_js
+from functions.front_end.pagina.consultar import gerar_consultar_html, gerar_consultar_js
+from functions.front_end.pagina.incluir import gerar_incluir_html, gerar_incluir_js
+from functions.front_end.pagina.visualizar import gerar_visualizar_html, gerar_visualizar_js
+from functions.front_end.scripts.router import gerar_router_js
+from functions.front_end.scripts.service import gerar_service_js
+from functions.entidade import identificar_entidade_funcoes_service, identificar_entidade_model
+from functions.gerar_todos import gerar_todos_componentes
+from typing import Callable, Dict, List, Union
+
+# Mapping between option labels and generator functions
+GeneratorFunc = Callable[[str], Union[str, None]]
+PROMPTDEFAULTMENSAGEMENTIDADE = """
+    ex: 
+    {
+        "Entidade": "Produto",
+        "Propriedades": [""id: int", "nome: string", "preco: decimal"]
+    }"""
+PROMPTDEFAULTMENSAGEMSERVICE = """
+    ex:
+    {
+        "Service": "ProdutoService",
+        "Funcoes": ["incluirProduto", "alterarProduto", "consultarProduto", "visualizarProduto"]
+    }"""
+UNIPROMPTDEFAULTMENSAGEMSERVICE = f"Entidade :\n{PROMPTDEFAULTMENSAGEMSERVICE}\nService:\n{PROMPTDEFAULTMENSAGEMENTIDADE}"
+MENSAGEMDEFAULTENT = f"Informe a entidade. {PROMPTDEFAULTMENSAGEMENTIDADE}"
+MENSAGEMDEFAULTUNIAO = f"Informe a entidade. {UNIPROMPTDEFAULTMENSAGEMSERVICE}"
+
+OPTION_FUNCTIONS: Dict[str, GeneratorFunc] = {
+    # Todas as opções (geração completa)
+    "🚀 Gerar Todas opções": gerar_todos_componentes,
+    # Back-End
+    "🏗️ Model (Back-End)": gerar_model,
+    "🧩 DTO (Back-End)": gerar_dto,
+    "🛠️ Service (Back-End)": gerar_service,
+    "🔌 API (Back-End)": gerar_api,
+    "🗂️ XML Mapping (NHibernate)": gerar_xml_mapping,
+
+    # Front-End Scripts
+    "🖥️ Service JS": gerar_service_js,
+    "🖥️ Router JS": gerar_router_js,
+
+    # Front-End Pages
+    "📝 Visualizar HTML": gerar_visualizar_html,
+    "🖥️ Visualizar JS": gerar_visualizar_js,
+    "📝 Incluir HTML": gerar_incluir_html,
+    "🖥️ Incluir JS": gerar_incluir_js,
+    "📝 Consultar HTML": gerar_consultar_html,
+    "🖥️ Consultar JS": gerar_consultar_js,
+    "🖥️ Alterar JS": gerar_alterar_js,
+}
+# Prompts for each function
+PROMPTS: Dict[str, str] = {
+    "🚀 Gerar Todas opções": "Forneça o script SQL da tabela (CREATE TABLE)",
+    "🏗️ Model (Back-End)": MENSAGEMDEFAULTENT,
+    "🧩 DTO (Back-End)": MENSAGEMDEFAULTENT,
+    "🛠️ Service (Back-End)": MENSAGEMDEFAULTENT,
+    "🔌 API (Back-End)": MENSAGEMDEFAULTENT,
+    "🗂️ XML Mapping (NHibernate)": "Forneça o script SQL da tabela (CREATE TABLE)",
+    "🖥️ Service JS": MENSAGEMDEFAULTUNIAO,
+    "🖥️ Router JS": MENSAGEMDEFAULTUNIAO,
+    "📝 Visualizar HTML": MENSAGEMDEFAULTENT,
+    "🖥️ Visualizar JS": MENSAGEMDEFAULTUNIAO,
+    "📝 Incluir HTML": MENSAGEMDEFAULTENT,
+    "🖥️ Incluir JS": MENSAGEMDEFAULTUNIAO,
+    "📝 Consultar HTML": MENSAGEMDEFAULTENT,
+    "🖥️ Consultar JS": MENSAGEMDEFAULTUNIAO,
+    "🖥️ Alterar JS": MENSAGEMDEFAULTUNIAO,
+}
+
+################### TESTE ###############################
+
 SQL = """CREATE TABLE core.Produto (
         Id INT PRIMARY KEY,
         Nome VARCHAR(100),
@@ -18,7 +95,6 @@ MAPPING = """
             </class>
         </hibernate-mapping>
         """
-
 MODEL = """### Model ###
         ```csharp
             using System;
@@ -81,7 +157,6 @@ MODEL = """### Model ###
                     }
                 }
             }"""
-
 API = """### API ###
     ```csharp
     using FuncefEngine.Base;
@@ -377,7 +452,6 @@ API = """### API ###
             }
         }
     }"""
-
 DTO = """### DTO ###
     ```csharp
     using FuncefEngine.Base;

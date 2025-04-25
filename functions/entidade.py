@@ -1,4 +1,4 @@
-from functions.Back_End.gerar_codigo import generate_chat_response
+from functions.back_end.gerar_codigo import generate_chat_response
 
 def identificar_entidade_model(mapping_code):
     prompt = f"""

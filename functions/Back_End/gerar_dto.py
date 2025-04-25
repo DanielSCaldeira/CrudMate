@@ -1,4 +1,4 @@
-from functions.Back_End.gerar_codigo import gerar_codigo
+from functions.back_end.gerar_codigo import gerar_codigo
 
 def gerar_dto(service_code):
     prompt = """    
