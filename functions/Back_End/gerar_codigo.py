@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-MODEL = os.getenv("OPENAI_MODEL", "gpt-4")
+MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
 
 def gerar_codigo(prompt_base, entrada):
@@ -19,7 +19,6 @@ def gerar_codigo(prompt_base, entrada):
         
     print(prompt)
     response = generate_chat_response(prompt)
-
     return response.choices[0].message.content.strip()
 
 def generate_chat_response(prompt):

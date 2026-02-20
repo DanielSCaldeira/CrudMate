@@ -1,5 +1,5 @@
 import json
-from functions.back_end import gerar_api
+from functions.back_end.gerar_api import gerar_api
 from functions.front_end.pagina.alterar import gerar_alterar_js
 from functions.front_end.pagina.consultar import gerar_consultar_html, gerar_consultar_js
 from functions.front_end.pagina.incluir import gerar_incluir_html, gerar_incluir_js

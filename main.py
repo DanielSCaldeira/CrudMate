@@ -33,11 +33,13 @@ def choose_options() -> List[str]:
     """Apresenta um menu de seleção e retorna as opções escolhidas."""
     show_banner()
     choices = list(OPTION_FUNCTIONS.keys())
-    return inquirer.checkbox(
-        message="Selecione funções a executar:",
+    selected = inquirer.checkbox(
+        message="Utilize a tecla *Espaço* do teclado para selecionar a função:",
         choices=choices,
         validate=lambda ans: ans or "Selecione ao menos uma opção.",
     ).execute()
+    print("Selecionado:", selected)
+    return selected
 
 
 def prompt_for_input(option: str) -> str:
@@ -69,7 +71,6 @@ def _extract_entity_name(results: Dict[str, str]) -> str:
 def main():        
     selected = choose_options()
     results: Dict[str, str] = {}
-
     for opt in selected:
         inp = prompt_for_input(opt)
         if "🔧 Gerar Todas opções" not in selected:
@@ -81,7 +82,7 @@ def main():
     if "🔧 Gerar Todas opções" not in selected:
         salvar_arquivos_gerados(
         output_dir="./",
-        entidade_name=_extract_entity_name(results),
+        entidade=_extract_entity_name(results),
         model=results.get("🔧 Model (Back-End)"),
         dto=results.get("🔧 DTO (Back-End)"),
         service=results.get("🔧 Service (Back-End)"),

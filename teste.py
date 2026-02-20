@@ -85,7 +85,7 @@ def choose_options() -> List[str]:
     show_banner()
     choices = list(OPTION_FUNCTIONS.keys())
     return inquirer.checkbox(
-        message="Selecione funções a executar:",
+        message="Utilize a tecla *Espaço* do teclado para selecionar a função:",
         choices=choices,
         validate=lambda ans: ans or "Selecione ao menos uma opção.",
     ).execute()
@@ -118,7 +118,7 @@ def main() -> None:
 
     salvar_arquivos_gerados(
         output_dir="./",
-        entidade_name=_extract_entity_name(results),
+        entidade=_extract_entity_name(results),
         model=results.get("🔧 Model (Back-End)"),
         dto=results.get("🔧 DTO (Back-End)"),
         service=results.get("🔧 Service (Back-End)"),
